@@ -1,0 +1,741 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins',sans-serif;
+}
+
+/*Body Start */
+body
+{
+
+    background-color: #f5f8fa;
+    overflow-x: hidden;
+
+}
+
+/* Container */
+.container
+{
+    width: 80%;
+    padding: 0;
+    margin: auto;
+}
+/*Header Logo */
+.logo img
+{
+    width:130px;
+    
+}
+.logo
+{
+    margin-top:5px ;
+}
+/* Header */
+header {
+    display: flex;
+        align-items: center;
+        /* vertically center logo & hamburger */
+        justify-content: space-between;
+        /* logo left, hamburger right */
+        padding: 0 30px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #fff;
+}
+/* Shadow class added on scroll */
+header.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  
+    /* optional: reduce padding on scroll */
+}
+
+
+.nav-header ul
+{
+    display: flex;
+    list-style: none;
+}
+
+.nav-header li
+{
+    margin: 0 20px;
+}
+
+header a
+{
+    text-decoration: none;
+    color: #333;
+}
+
+/* Showcase */
+.hero-home
+{
+    background: #474980 url(../img/hero_home_bg_1.svg) no-repeat center bottom;
+    height: 80vh;
+        width: 100%;
+        text-align: center;
+        padding: 100px 0;
+        position: relative;
+            z-index: 1;
+}
+
+.hero-section 
+{
+    font-size: 2rem;
+    color: #fff;
+}
+.userInput
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.userInput input
+{
+    padding: 10px 25px;
+    margin: 15px 0;
+    width: 50%;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 3px;
+    border: none;
+
+}
+.userInput input:focus
+{
+    outline: 1px solid #74d1c6
+}
+
+.btn-Search
+{
+    padding: 10.5px 25px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #74d1c6;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-Search:hover
+{
+    background-color: #e74e84;
+    transition: all 0.3s ease-in-out;
+}
+
+
+#custom-search-input ul li {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.3);
+        min-width: 80px;
+        padding: 3px 0;
+        text-align: center;
+        border-radius: 3px;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+}
+#custom-search-input ul li:hover{
+    background-color: #e74e84;
+    color: #fff;
+    
+}
+
+#custom-search-input label
+{
+    cursor: pointer;
+}
+
+/* Appointment Section */
+.explore-section
+{
+    padding: 100px 0;
+    
+}
+
+.main-title
+{
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.main-title h1 {
+    font-weight: 300;
+    letter-spacing: -1px;
+    font-size: 45px;
+    margin: 0;
+    text-transform: uppercase;
+    color:#333;
+    line-height: 1.2;
+}
+.main-title p {
+    font-weight: 300;
+    font-size: 20px;
+    color: #777;
+    padding: 0 10%;
+    margin: 10px 0;
+}
+.box_feat{
+    position: absolute;
+    top: 145%;
+    right: 62%;
+    margin:0 ;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #ededed;
+    background: #fff url(../img/icons/arrow-gray-1.svg) no-repeat center center;
+    display: block;
+    z-index: 9;
+}
+#icon1 {
+    background: #fff url(../img/icons/icon-home-1.svg) no-repeat center 45px;
+    
+}
+#icon2 {
+    background: #fff url(../img/icons/icon-home-2.svg) no-repeat center 45px;
+
+}
+#icon3 {
+    background: #fff url(../img/icons/icon-home-3.svg) no-repeat center 45px;
+
+}
+.cards-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cardView {
+    background-color: #fff;
+    height: 400px;
+    text-align: center;
+    padding: 0px 45px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+    margin: 0 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+.cardView h3 {
+    text-transform: uppercase;
+    font-size: 21px;
+    font-weight:600;
+    color: #e74e84;
+}
+
+.cardView p
+{
+margin: 10px 0;
+color: #777;
+}
+.btn-box
+{
+    display: flex;
+    padding: 50px 0;
+
+}
+ .btn-Find {
+            padding: 10.5px 25px;
+            margin: auto;
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            background-color: #e74e84;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+    
+        .btn-Find:hover {
+            background-color: #74d1c6;
+            transition: all 0.3s ease-in-out;
+        }
+
+
+/*Most Viewed */
+.most-viewd
+{
+    background-color: #fff;
+    min-height: 30vh;
+}
+
+/*App */
+
+.app-section {
+    background: #3f4079 url(../img/hero_bg_1.svg) no-repeat center center / cover;
+    min-height: 90vh;
+    background-attachment: fixed;
+    /* 👈 key line */
+    position: relative;
+    z-index: 1;
+    padding: 50px 0;
+}
+
+footer {
+    position: relative;
+    z-index: 10;
+}
+.content
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+p.lead
+{
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 25px;
+}
+.app-section h3  {
+font-size: 3rem;
+padding: 0 25px;
+color: #fff;
+}
+.app-section h3 strong {
+    color: #fff02a;
+}
+
+.app-section small {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 13px;
+    font-size: 0.8125rem;
+    opacity: 0.6;
+    color: #fff;
+    margin: 15px 25px;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    /* Light gray */
+    border-top: 8px solid #e74e84;
+    /* Pink color */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 100px auto;
+    /* Center it */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Full-screen overlay */
+#page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    /* semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+}
+
+/* Spinner */
+#page-loader .loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #e74e84;
+    /* Clineo pink */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Hidden state */
+#page-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Mobile & Tablet Styles */
+@media screen and (max-width: 1024px) {
+
+    /* Header adjustments */
+    header {
+        padding: 20px 30px;
+    }
+
+    .nav-header ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-header li {
+        margin: 10px 15px;
+    }
+
+    .logo img {
+        width: 140px;
+    }
+
+    /* Hero adjustments */
+    .hero-home {
+        padding: 80px 20px;
+        height: 70vh;
+    }
+
+    .hero-section {
+        font-size: 1.8rem;
+    }
+
+    .userInput input {
+        width: 70%;
+        padding: 10px 15px;
+    }
+
+    .btn-Search {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    #custom-search-input ul li {
+        font-size: 0.9rem;
+        min-width: 70px;
+        margin-bottom: 5px;
+    }
+
+    .main-title h1 {
+        font-size: 35px;
+    }
+
+    .main-title p {
+        font-size: 18px;
+        padding: 0 5%;
+    }
+
+    .cards-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cardView {
+        width: 90%;
+        margin: 15px 0;
+        padding: 20px 25px;
+    }
+
+    .btn-box {
+        padding: 30px 0;
+    }
+
+    .app-section .content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .app-section img {
+        width: 300px;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .app-section h3 {
+        font-size: 2.2rem;
+    }
+
+    .app-section .lead {
+        font-size: 1.2rem;
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header {
+       
+        padding: 15px 20px;
+        height: auto;
+    }
+
+    .nav-header ul {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .nav-header li {
+        margin: 10px 0;
+    }
+
+    .userInput input {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    #custom-search-input ul li {
+        min-width: 60px;
+        font-size: 0.8rem;
+    }
+
+    .main-title h1 {
+        font-size: 28px;
+    }
+
+    .main-title p {
+        font-size: 16px;
+    }
+
+    .cardView {
+        width: 95%;
+        padding: 15px 20px;
+    }
+
+    .app-section img {
+        width: 250px;
+    }
+
+    .app-section h3 {
+        font-size: 1.8rem;
+    }
+
+    .app-section .lead {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header {
+        padding: 10px 15px;
+    }
+
+    .logo img {
+        width: 120px;
+    }
+
+    .hero-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .userInput input {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .btn-Search {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    .cards-section {
+        gap: 15px;
+    }
+
+    .main-title h1 {
+        font-size: 24px;
+    }
+
+    .main-title p {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .cardView {
+        padding: 15px;
+    }
+
+    .app-section img {
+        width: 200px;
+    }
+
+    .app-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .app-section .lead {
+        font-size: 0.95rem;
+    }
+
+    .btn-Find {
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    /* hidden on desktop */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Hamburger open animation */
+.hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile nav menu */
+@media screen and (max-width: 768px) {
+    header {
+            padding: 10px 20px;
+            /* smaller padding */
+            height: 60px;
+            /* fixed height for vertical alignment */
+            align-items: center;
+            /* vertical center */
+        }
+    
+        .logo img {
+            height: 100px;
+            /* scale logo */
+            width: auto;
+            display: block;
+        }
+    
+        .hamburger {
+            display: flex;
+            /* show hamburger */
+            margin-left: auto;
+            /* push to right */
+            align-items: center;
+            /* vertical align inside header */
+            height: 25px;
+            width: 25px;
+        }
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* menu slides from left now */
+    height: 100vh;
+    width: 250px;
+    border-radius: 5px;
+    background: #fff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-100%);
+    /* hide by default */
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    .nav-header.active {
+        transform: translateX(0);
+        /* slide in when active */
+    }
+
+    .nav-header ul {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-header li {
+        margin: 20px 20px;
+    }
+
+        .hero-home {
+            height: auto;
+            /* let content determine height */
+            padding: 80px 15px 50px;
+            /* smaller padding top/bottom */
+            text-align: center;
+        }
+    
+        .hero-section h1 {
+            font-size: 1.8rem;
+            /* smaller heading */
+            line-height: 1.2;
+        }
+    
+        .hero-section p {
+            font-size: 1rem;
+            /* smaller paragraph */
+            margin: 10px 0 20px;
+        }
+    
+        .userInput {
+            flex-direction: column;
+            /* stack input + button vertically */
+            width: 100%;
+        }
+    
+        .userInput input {
+            width: 90%;
+            /* take most of the screen */
+            margin-bottom: 10px;
+            /* space below input */
+            padding: 12px 20px;
+            font-size: 1rem;
+        }
+    
+        .btn-Search {
+            width: 90%;
+            /* button full width */
+            padding: 12px;
+            font-size: 1rem;
+        }
+    
+        #custom-search-input ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+    
+        #custom-search-input ul li {
+            margin: 5px;
+            min-width: 80px;
+        }
+
+        
+}

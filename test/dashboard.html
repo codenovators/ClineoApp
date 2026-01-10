@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clinéo | Dashboard</title>
+
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --primary: #1d72e7;
+      --border: #d6dee6;
+      --subtext: #6d7580;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f1218;
+      --card: #1a1e25;
+      --text: #e8ecf2;
+      --primary: #3c8aff;
+      --border: #2b323c;
+      --subtext: #9aa2b0;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--card);
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      border-radius: 8px;
+    }
+
+    .top-actions button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 10px;
+      background: var(--primary);
+      color: white;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    /* LAYOUT */
+    .main {
+      padding: 20px;
+    }
+
+    /* STATS GRID */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+    }
+
+    .stat-title {
+      font-size: 0.85rem;
+      color: var(--subtext);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    /* SEARCH */
+    .search-bar {
+      margin-bottom: 20px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+      background: var(--card);
+      color: var(--text);
+    }
+
+    /* CHART CARD */
+    .chart-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+      margin-bottom: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">
+      <div class="brand-logo"></div>
+      Clinéo
+    </div>
+
+    <div class="top-actions">
+      <button onclick="toggleTheme()">Dark Mode</button>
+      <button onclick="window.location.href='addPatient.html'">+ Add Patient</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" placeholder="Search patients...">
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">Total Patients</div>
+        <div class="stat-value" id="statPatients">124</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title">Visits Today</div>
+        <div class="stat-value" id="statVisits">18</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title">Upcoming Appointments</div>
+        <div class="stat-value" id="statUpcoming">9</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title">Alerts</div>
+        <div class="stat-value" id="statAlerts">3</div>
+      </div>
+    </div>
+
+    <!-- CHART -->
+    <div class="chart-card">
+      <canvas id="visitsChart"></canvas>
+    </div>
+
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Dark Mode
+  function toggleTheme() {
+    const current = document.body.getAttribute("data-theme");
+    const newTheme = current === "dark" ? "light" : "dark";
+    document.body.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  }
+
+  document.body.setAttribute("data-theme", localStorage.getItem("theme") || "light");
+
+  // -- Persisted state defaults & helpers --
+  const defaultVisits = [0, 0, 1, 16, 22, 9, 13]; // Mon..Sun
+  const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  function getVisits() {
+    try {
+      const raw = localStorage.getItem('visits');
+      const parsed = raw ? JSON.parse(raw) : null;
+      if (Array.isArray(parsed) && parsed.length === 7) return parsed;
+    } catch (e) {}
+    return defaultVisits.slice();
+  }
+
+  function getPatients() {
+    const p = parseInt(localStorage.getItem('patients'), 10);
+    return Number.isFinite(p) ? p : 124;
+  }
+
+  // Create Chart.js instance using persisted data
+  const ctx = document.getElementById('visitsChart').getContext('2d');
+  const primaryColor = getComputedStyle(document.body).getPropertyValue('--primary') || '#1d72e7';
+  const textColor = getComputedStyle(document.body).getPropertyValue('--text') || '#1a1a1a';
+  const subtextColor = getComputedStyle(document.body).getPropertyValue('--subtext') || '#6d7580';
+
+  const visitsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: "Weekly Visits",
+        data: getVisits(),
+        borderWidth: 2,
+        borderColor: primaryColor.trim(),
+        backgroundColor: primaryColor.trim(),
+        tension: 0.3,
+        fill: false,
+      }]
+    },
+    options: {
+      scales: {
+        y: { ticks: { color: subtextColor.trim() } },
+        x: { ticks: { color: subtextColor.trim() } }
+      },
+      plugins: {
+        legend: { labels: { color: textColor.trim() } }
+      }
+    }
+  });
+
+  // Update UI from localStorage
+  function loadState() {
+    const visits = getVisits();
+    visitsChart.data.datasets[0].data = visits;
+    visitsChart.update();
+    document.getElementById('statPatients').textContent = getPatients();
+    // optional: show total visits in statVisits
+    const totalVisits = visits.reduce((s, v) => s + (Number(v) || 0), 0);
+    document.getElementById('statVisits').textContent = totalVisits;
+  }
+
+  // Listen for storage changes (fires across tabs/windows)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'visits' || e.key === 'patients') loadState();
+  });
+
+  // Also refresh when user returns to the tab
+  window.addEventListener('focus', loadState);
+
+  // Expose helper so addPatient.html (if opened via window.open) can call:
+  //   window.opener.addPatientToday()
+  // This increments today's visits and total patients and writes to localStorage,
+  // which triggers the storage event for other tabs.
+  window.addPatientToday = function() {
+    const today = new Date().getDay(); // 0=Sun,1=Mon,...6=Sat
+    const idx = (today + 6) % 7; // convert to Mon=0..Sun=6
+    const visits = getVisits();
+    visits[idx] = (Number(visits[idx]) || 0) + 1;
+    localStorage.setItem('visits', JSON.stringify(visits));
+    localStorage.setItem('patients', String(getPatients() + 1));
+    // update current page immediately as well
+    loadState();
+  };
+
+  // initial render
+  loadState();
+</script>
+
+</body>
+</html>

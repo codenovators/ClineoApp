@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Add Patient</title>
+  <style>
+    :root { --bg:#f4f7fb; --card:#fff; --text:#1a1a1a; --primary:#1d72e7; --border:#d6dee6; }
+    body { margin:0; font-family:Inter, sans-serif; background:var(--bg); display:flex; align-items:center; justify-content:center; height:100vh; color:var(--text); }
+    .card { background:var(--card); padding:18px; border-radius:12px; width:360px; box-shadow:0 6px 30px rgba(0,0,0,0.08); border:1px solid var(--border); }
+    h2 { margin:0 0 12px 0; font-size:1.1rem; color:var(--primary); }
+    label { display:block; font-size:0.85rem; color:#555; margin-top:8px; }
+    input[type="text"]{ width:100%; padding:10px; margin-top:6px; border-radius:8px; border:1px solid var(--border); }
+    .actions { margin-top:14px; display:flex; gap:8px; justify-content:flex-end; }
+    button { padding:8px 12px; border-radius:8px; border:none; cursor:pointer; }
+    .btn-primary { background:var(--primary); color:#fff; }
+    .btn-muted { background:#f0f3f7; color:var(--text); }
+    .note { margin-top:10px; font-size:0.85rem; color:#666; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Add Patient</h2>
+    <form id="addForm">
+      <label for="name">Patient name (optional)</label>
+      <input id="name" name="name" type="text" placeholder="John Doe" />
+
+      <label for="visitNow">Record visit now?</label>
+      <div style="margin-top:6px;">
+        <label style="font-size:0.9rem;">
+          <input type="checkbox" id="visitNow" checked /> Yes
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn-muted" onclick="window.close()">Cancel</button>
+        <button type="submit" class="btn-primary">Add</button>
+      </div>
+
+      <div class="note">This will increment Total Patients. If "Record visit now" is checked it will also increment today's visits.</div>
+    </form>
+  </div>
+
+  <script>
+    // increment helpers (mirror dashboard logic)
+    function getVisits() {
+      try {
+        const raw = localStorage.getItem('visits');
+        const parsed = raw ? JSON.parse(raw) : null;
+        if (Array.isArray(parsed) && parsed.length === 7) return parsed.map(v => Number(v) || 0);
+      } catch (e) {}
+      return [0,0,0,0,0,0,0];
+    }
+    function setVisits(vis) { localStorage.setItem('visits', JSON.stringify(vis)); }
+    function getPatients(){ return Number.parseInt(localStorage.getItem('patients')||'0',10) || 0; }
+    function setPatients(n){ localStorage.setItem('patients', String(n)); }
+
+    function todayIndexMonStart(){
+      const d = new Date().getDay();
+      return (d + 6) % 7;
+    }
+
+    document.getElementById('addForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      // increment patients
+      const patients = getPatients() + 1;
+      setPatients(patients);
+
+      // optionally increment today's visits
+      const visitNow = document.getElementById('visitNow').checked;
+      if (visitNow) {
+        const visits = getVisits();
+        const idx = todayIndexMonStart();
+        visits[idx] = (Number(visits[idx]) || 0) + 1;
+        setVisits(visits);
+      }
+
+      // try to notify opener immediately (if open via window.open and same origin)
+      try { if (window.opener && typeof window.opener.loadState === 'function') window.opener.loadState(); } catch (err) {}
+
+      // close popup
+      window.close();
+    });
+  </script>
+</body>
+</html>
